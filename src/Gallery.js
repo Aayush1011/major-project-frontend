@@ -28,7 +28,6 @@ export default function Gallery(props) {
           includeSmartAlbums: true,
         });
         const album = albums.find((a) => a.title === "Skin Cancer");
-        console.log(albums);
         const getPhotos = await MediaLibrary.getAssetsAsync({
           sortBy: ["creationTime"],
           mediaType: ["photo"],

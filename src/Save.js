@@ -60,12 +60,19 @@ function Save(props) {
 
     if (responseJson) {
       setUploading(false);
-      console.log(responseJson);
 
-      if (responseJson.result === "False") {
-        props.navigation.navigate("ResultScreen", { detected: false });
+      if (responseJson.result === "no skin detected") {
+        props.navigation.navigate("ResultScreen", { skinDetected: false });
+      } else if (responseJson.result === "False") {
+        props.navigation.navigate("ResultScreen", {
+          skinDetected: true,
+          cancerDetected: false,
+        });
       } else {
-        props.navigation.navigate("ResultScreen", { detected: true });
+        props.navigation.navigate("ResultScreen", {
+          skinDetected: true,
+          cancerDetected: true,
+        });
       }
     }
     return;

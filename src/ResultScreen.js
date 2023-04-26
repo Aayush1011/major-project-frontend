@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
 });
 
 export default function ResultScreen(props) {
-  const diagnosis = props.route.params.detected
+  const skinDetected = props.route.params.skinDetected;
+  const diagnosis = props.route.params.cancerDetected
     ? "Please be careful Melanoma Skin Cancer Detected"
     : "You are safe Melanoma Skin Cancer Not Detected";
   return (
@@ -46,6 +47,7 @@ export default function ResultScreen(props) {
         backgroundColor: "#68b6ef",
         paddingVertical: 20,
         paddingHorizontal: 10,
+        justifyContent: "center",
         height: height,
       }}
     >
@@ -59,7 +61,7 @@ export default function ResultScreen(props) {
           },
         ]}
       >
-        {diagnosis}
+        {skinDetected ? diagnosis : "No skin detected"}
       </Text>
       <Text
         style={[
@@ -70,24 +72,28 @@ export default function ResultScreen(props) {
           },
         ]}
       >
-        Follow these preventive measures
+        {skinDetected
+          ? "Follow these preventive measures"
+          : "Please provide an image containing skin"}
       </Text>
-      <FlatList
-        data={preventiveMeasures}
-        renderItem={({ item }) => (
-          <Text
-            style={[
-              styles.text,
-              {
-                fontSize: 20,
-              },
-            ]}
-          >
-            {`\u2022 ${item.text}`}
-          </Text>
-        )}
-        keyExtractor={(item) => item.id}
-      />
+      {skinDetected && (
+        <FlatList
+          data={preventiveMeasures}
+          renderItem={({ item }) => (
+            <Text
+              style={[
+                styles.text,
+                {
+                  fontSize: 20,
+                },
+              ]}
+            >
+              {`\u2022 ${item.text}`}
+            </Text>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      )}
       <TouchableOpacity
         style={{
           alignItems: "center",
